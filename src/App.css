@@ -4,12 +4,10 @@
   box-sizing: border-box;
   font-family: Arial, sans-serif;
 }
-
 .app-container {
   display: flex;
   height: 100vh;
 }
-
 .sidebar {
   width: 220px;
   background-color: #1e2a38;
@@ -17,35 +15,29 @@
   padding: 20px;
   height: 100vh;
 }
-
 .sidebar h2 {
   margin-bottom: 30px;
   font-size: 20px;
   color: #00bcd4;
 }
-
 .sidebar ul {
   list-style: none;
 }
-
 .sidebar ul li {
   padding: 12px 0;
   cursor: pointer;
   font-size: 15px;
   color: #ccc;
 }
-
 .sidebar ul li:hover {
   color: white;
 }
-
 .main-content {
   flex: 1;
   display: flex;
   flex-direction: column;
   background-color: #f4f6f8;
 }
-
 .topbar {
   display: flex;
   justify-content: space-between;
@@ -54,23 +46,19 @@
   padding: 15px 25px;
   border-bottom: 1px solid #e0e0e0;
 }
-
 .topbar h3 {
   font-size: 18px;
   color: #1e2a38;
 }
-
 .topbar-right span {
   font-size: 14px;
   color: #555;
 }
-
 .dashboard {
   display: flex;
   gap: 20px;
   padding: 30px;
 }
-
 .card {
   background-color: white;
   padding: 25px;
@@ -80,4 +68,416 @@
   font-size: 16px;
   color: #1e2a38;
   border: 1px solid #e0e0e0;
+}
+HEAD
+.product-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.product-table th {
+  background-color: #f2f2f2;
+  text-align: left;
+  padding: 10px;
+  border-bottom: 2px solid #ddd;
+  font-weight: bold;
+}
+
+.product-table td {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+/* Optional: Subtle hover effect on rows */
+.product-table tbody tr:hover {
+  background-color: grey;
+}
+
+/* let us style the invoice stuff */
+
+/* ── 😭😭😭😭INVOICE.JS ── */
+/* ── RESET ── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ── LAYOUT ── */
+.invoice-page {
+  font-family: system-ui, sans-serif;
+  background: black;
+  color: white;
+  min-height: 100vh;
+  padding: 20px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.invoice-page .card:last-child {
+  grid-column: 1 / -1;
+}
+.card {
+  background: #111;
+  border: 1px solid #333;
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.card h2, .card h3 {
+  font-size: 12px;
+  text-transform: uppercase;
+  color: #888;
+  margin-bottom: 15px;
+}
+
+.card input {
+  width: 100%;
+  background: #222;
+  border: 1px solid #333;
+  border-radius: 4px;
+  padding: 10px;
+  color: white;
+  font-size: 14px;
+  outline: none;
+  margin-bottom: 10px;
+}
+.card input:focus {
+  border-color: blue;
+}
+.card > div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  background: #222;
+  border-radius: 4px;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+.card button {
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 12px;
+  cursor: pointer;
+  border: none;
+}
+.card:nth-child(3) button {
+  background: purple;
+  color: white;
+}
+.card:nth-child(4) button {
+  background: transparent;
+  border: 1px solid red;
+  color: red;
+}
+.card:last-child button:first-of-type {
+  background: #4A4875;
+  color: white;
+  padding: 12px 24px;
+  font-size: 14px;
+}
+.card:last-child {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.card:last-child h2 {
+  font-size: 28px;
+  color: white;
+  margin-bottom: 0;
+}
+
+.card:last-child > div {
+  display: flex;
+  gap: 10px;
+  background: transparent;
+  padding: 0;
+  margin: 0;
+}
+@media (max-width: 860px) {
+  .invoice-page { grid-template-columns: 1fr; }
+  .card:last-child { flex-direction: column; align-items: flex-start; gap: 15px; }
+  .card:last-child > div, .card:last-child button { width: 100%; }
+}
+
+/* 😭😭😭😭😭😭😭😭😭😭😭😭😭😭😭😭IVOICE HISTRYYYYYYYYY*/
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:system-ui,sans-serif;
+    background:black;
+    color:white;
+}
+.invoice-page{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:20px;
+    min-height:100vh;
+    padding:20px;
+}
+.card{
+    background:#111;
+    border:1px solid #333;
+    border-radius:8px;
+    padding:20px;
+}
+.card h2,
+.card h3{
+    font-size:12px;
+    text-transform:uppercase;
+    color:#888;
+    margin-bottom:15px;
+}
+.card input{
+    width:100%;
+    padding:10px;
+    margin-bottom:10px;
+    border:1px solid #333;
+    border-radius:4px;
+    background:#222;
+    color:white;
+    outline:none;
+}
+.card input:focus{
+    border-color:blue;
+}
+.invoice-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    background:#222;
+    padding:10px;
+    border-radius:4px;
+    margin-bottom:8px;
+}
+.card button{
+    padding:8px 14px;
+    border:none;
+    border-radius:4px;
+    cursor:pointer;
+    font-size:13px;
+}
+.add-btn{
+    background:purple;
+    color:white;
+}
+.remove-btn{
+    background:transparent;
+    border:1px solid red;
+    color:red;
+}
+.bottom-card{
+    grid-column:1/3;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+.bottom-card h2{
+    font-size:28px;
+    color:white;
+}
+.bottom-buttons{
+    display:flex;
+    gap:10px;
+}
+.save-btn{
+    background:blue;
+    color:white;
+    padding:12px 24px;
+}
+.history-btn{
+    background:#222;
+    color:white;
+    border:1px solid #333;
+    padding:12px 24px;
+}
+.history-page{
+    min-height:100vh;
+    padding:20px;
+}
+.history-page h2{
+    margin-bottom:20px;
+    font-size:24px;
+    color:black;
+}
+.history-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    gap:15px;
+}
+.history-card{
+    background:#111;
+    border:1px solid #333;
+    border-radius:8px;
+    padding:20px;
+}
+.history-card p{
+    display:flex;
+    justify-content:space-between;
+    padding:8px 0;
+    border-bottom:1px solid #222;
+    color:#aaa;
+    font-size:13px;
+}
+.history-card p:last-child{
+    border:none;
+}
+.history-card b{
+    color:#666;
+    font-size:10px;
+    text-transform:uppercase;
+}
+.id{
+    color:purple;
+    font-weight:bold;
+}
+.customer{
+    color:white;
+}
+.total{
+    color:blue;
+    font-weight:bold;
+}
+.date{
+    color:#666;
+    font-size:11px;
+}
+@media(max-width:860px){
+    .invoice-page{
+        grid-template-columns:1fr;
+    }
+    .bottom-card{
+        grid-column:1;
+        flex-direction:column;
+        align-items:flex-start;
+        gap:15px;
+    }
+    .bottom-buttons{
+        width:100%;
+        flex-direction:column;
+    }
+    .bottom-buttons button{
+        width:100%;
+    }
+}
+@media(max-width:640px){
+    .history-grid{
+        grid-template-columns:1fr;
+    }
+
+}
+.products-page{
+    min-height:100vh;
+    padding:40px;
+    background:black;
+    color:white;
+}
+.products-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:30px;
+}
+.products-header h2{
+    font-size:26px;
+}
+.products-header button{
+    padding:10px 18px;
+    border:none;
+    border-radius:6px;
+    background:blue;
+    color:white;
+    cursor:pointer;
+}
+.product-form{
+    position:fixed;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    width:350px;
+    background:#111;
+    border:1px solid purple;
+    border-radius:10px;
+    padding:20px;
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+}
+.product-form h3{
+    color:#888;
+    font-size:13px;
+    text-transform:uppercase;
+}
+.product-form input{
+    padding:10px;
+    border:1px solid #333;
+    border-radius:5px;
+    background:#222;
+    color:white;
+    outline:none;
+}
+.product-form input:focus{
+    border-color:blue;
+}
+.form-buttons{
+    display:flex;
+    gap:10px;
+}
+.form-buttons button{
+    flex:1;
+    padding:10px;
+    border:none;
+    border-radius:5px;
+    cursor:pointer;
+}
+.add-product-btn{
+    background:blue;
+    color:white;
+}
+.cancel-btn{
+    background:#222;
+    color:#aaa;
+    border:1px solid #333;
+}
+.product-table{
+    width:100%;
+    border-collapse:collapse;
+}
+.product-table th{
+    padding:14px;
+    text-align:left;
+    font-size:12px;
+    text-transform:uppercase;
+    color:#666;
+    border-bottom:1px solid #333;
+}
+.product-table td{
+    padding:14px;
+    border-bottom:1px solid #222;
+    color:#aaa;
+}
+.product-table tr:hover{
+    background:#111;
+}
+.product-name{
+    color:white;
+    font-weight:bold;
+}
+.product-price{
+    color:blue;
+    font-weight:bold;
+}
+.product-stock{
+    color:purple;
+    text-align:right;
 }
