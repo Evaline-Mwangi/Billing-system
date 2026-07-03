@@ -31,14 +31,14 @@ export default function Products({ onProductClick }) {
       {/* Summary */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 16, marginBottom: 24 }}>
         {[
-          { label: 'Total Products', value: products.length, icon: '📦', color: 'orange' },
-          { label: 'Active', value: products.filter(p => p.status === 'Active').length, icon: '✅', color: 'green' },
-          { label: 'Low Stock', value: products.filter(p => p.status === 'Low Stock').length, icon: '⚠️', color: 'purple' },
-          { label: 'Out of Stock', value: products.filter(p => p.status === 'Out of Stock').length, icon: '🚫', color: 'red' },
+          { label: 'Total Products', value: products.length, color: 'orange' },
+          { label: 'Active', value: products.filter(p => p.status === 'Active').length, color: 'green' },
+          { label: 'Low Stock', value: products.filter(p => p.status === 'Low Stock').length, color: 'purple' },
+          { label: 'Out of Stock', value: products.filter(p => p.status === 'Out of Stock').length, color: 'red' },
         ].map((s, i) => (
           <div className="stat-card" key={i}>
             <div className="stat-card-header">
-              <div className={`stat-icon ${s.color}`}>{s.icon}</div>
+              {/* <div className={`stat-icon ${s.color}`}>{s.icon}</div> */}
             </div>
             <div className="stat-value">{s.value}</div>
             <div className="stat-label">{s.label}</div>
@@ -51,7 +51,6 @@ export default function Products({ onProductClick }) {
           <div className="table-card-title">Product List</div>
           <div className="table-toolbar">
             <div className="search-box">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
               <input placeholder="Search by name or SKU..." value={search} onChange={e => setSearch(e.target.value)} />
             </div>
             <select className="filter-select" value={catFilter} onChange={e => setCatFilter(e.target.value)}>
@@ -63,8 +62,7 @@ export default function Products({ onProductClick }) {
               {view === 'table' ? '⊞ Grid' : '≡ Table'}
             </button>
             <button className="btn btn-primary btn-sm">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-              Add Product
+              + Add Product
             </button>
           </div>
         </div>
@@ -106,9 +104,9 @@ export default function Products({ onProductClick }) {
                     <td><span className={`badge badge-${stockColor(p.status)}`}>{p.status}</span></td>
                     <td>
                       <div style={{ display: 'flex', gap: 4 }}>
-                        <button className="btn btn-outline btn-sm btn-icon" title="View" onClick={() => onProductClick(p)}>👁</button>
-                        <button className="btn btn-outline btn-sm btn-icon" title="Edit">✏️</button>
-                        <button className="btn btn-outline btn-sm btn-icon" title="Delete">🗑</button>
+                        <button className="btn btn-outline btn-sm btn-icon" title="View" onClick={() => onProductClick(p)}><b>VIEW</b></button>
+                        <button className="btn btn-outline btn-sm btn-icon" title="Edit"><b>EDIT</b></button>
+                        <button className="btn btn-outline btn-sm btn-icon" title="Delete"><b>DELETE</b></button>
                       </div>
                     </td>
                   </tr>

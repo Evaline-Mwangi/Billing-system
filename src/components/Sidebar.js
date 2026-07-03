@@ -55,7 +55,7 @@ const navItems = [
   { label: 'Inventory', type: 'section' },
   { id: 'products', label: 'Products', icon: 'products' },
   { id: 'stock-reconciliation', label: 'Stock Reconciliation', icon: 'stock' },
-  { id: 'transfer', label: 'Stock Transfer', icon: 'transfer' },
+  { id: 'stock-transfer', label: 'Stock Transfer', icon: 'transfer' },
   { label: 'Sales', type: 'section' },
   { id: 'sales', label: 'Sales', icon: 'sales', badge: 3 },
   { id: 'returns', label: 'Sales Returns', icon: 'returns' },

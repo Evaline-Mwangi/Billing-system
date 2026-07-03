@@ -1,63 +1,13 @@
-// import React from "react";
-
-// function SaleCard(){
-//   return(
-   
-
-//   );
-// };
-
-// function RevenueCard() {
-//   return ();
-// };
-
-// function TopSellingProducts(){
-//   return();
-// };
-
-// function LowStockProducts(){
-//   return();
-// };
-
-// function ResentSales(){
-//   return();
-// };
-
-// function SalesStaticsChart() {
-//   return ();
-// };
-
-// function RecentTransactions() {
-//   return();
-// }:
-
-// export default function Dashboard() {
-//   return (
-//     <>
-//       <div className="salesStats">
-//         <SalesStaticsChart />
-//         <RecentTransactions />
-//       </div>
-
-//       <div className="">
-//         <TopSellingProducts />
-//         <LowStockProducts />
-//         <RecentSales />
-//       </div>
-//     </>
-//   );
-// }
-
-
 import React, { useState } from 'react';
 import '../App.css';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
 const reportStats = [
-  { label: 'Total Sales', value: '$284,500', change: '+14.2%', up: true, icon: '💰', color: 'orange' },
-  { label: 'Total Purchase', value: '$142,800', change: '+6.5%', up: true, icon: '🧾', color: 'blue' },
-  { label: 'Gross Profit', value: '$141,700', change: '+22.1%', up: true, icon: '📈', color: 'green' },
-  { label: 'Net Loss', value: '$12,400', change: '-3.4%', up: false, icon: '📉', color: 'red' },
-  { label: 'Total Returns', value: '$8,250', change: '+1.1%', up: false, icon: '↩️', color: 'purple' },
+  { label: 'Total Sales', value: '$284,500', change: '+14.2%', up: true, color: 'orange' },
+  { label: 'Total Purchase', value: '$142,800', change: '+6.5%', up: true, color: 'blue' },
+  { label: 'Gross Profit', value: '$141,700', change: '+22.1%', up: true, color: 'green' },
+  { label: 'Net Loss', value: '$12,400', change: '-3.4%', up: false, color: 'red' },
+  { label: 'Total Returns', value: '$8,250', change: '+1.1%', up: false, color: 'purple' },
 ];
 
 const salesData = [
@@ -77,54 +27,32 @@ const purchaseData = [
   { ref: 'PO-2026-104', date: 'Jun 25, 2026', supplier: 'Quick Supply Inc.', warehouse: 'Branch B', grandTotal: '$9,200', paid: '$0', due: '$9,200', status: 'Pending' },
 ];
 
-const LineChart = () => {
-  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-  const salesPts = [30, 55, 40, 78, 60, 92, 70, 85, 65, 90, 75, 100];
-  const purchPts = [20, 35, 28, 50, 40, 60, 48, 58, 45, 62, 55, 70];
-  const w = 520, h = 150, padX = 20, padY = 10;
-  const pts = (data) => data.map((v, i) => {
-    const x = padX + (i / (data.length - 1)) * (w - 2 * padX);
-    const y = h - padY - (v / 100) * (h - 2 * padY);
-    return `${x},${y}`;
-  }).join(' ');
-  const toPath = (data, color) => {
-    const points = data.map((v, i) => {
-      const x = padX + (i / (data.length - 1)) * (w - 2 * padX);
-      const y = h - padY - (v / 100) * (h - 2 * padY);
-      return [x, y];
-    });
-    let d = `M ${points[0][0]} ${points[0][1]}`;
-    for (let i = 1; i < points.length; i++) {
-      const cp1x = (points[i - 1][0] + points[i][0]) / 2;
-      d += ` C ${cp1x} ${points[i-1][1]}, ${cp1x} ${points[i][1]}, ${points[i][0]} ${points[i][1]}`;
-    }
-    return d;
-  };
+const ChartComponent = () => {
+  // Generate monthly sales and purchase data from June
+  const chartData = [
+    { month: 'Jun 24', sales: 5600, purchase: 9200 },
+    { month: 'Jun 25', sales: 1520, purchase: 12500 },
+    { month: 'Jun 26', sales: 650, purchase: 3400 },
+    { month: 'Jun 27', sales: 3200, purchase: 7800 },
+    { month: 'Jun 28', sales: 890, purchase: 0 },
+    { month: 'Jun 29', sales: 2450, purchase: 0 },
+  ];
+
   return (
-    <div>
-      <div style={{ display: 'flex', gap: 16, marginBottom: 12 }}>
-        {[['Sales', '#ff6b35'], ['Purchase', '#3b82f6']].map(([l, c]) => (
-          <span key={l} style={{ fontSize: 12, color: '#6b7280', display: 'flex', alignItems: 'center', gap: 5 }}>
-            <span style={{ width: 24, height: 2, background: c, display: 'inline-block', borderRadius: 1 }}></span>{l}
-          </span>
-        ))}
-      </div>
-      <svg width="100%" viewBox={`0 0 ${w} ${h + 20}`}>
-        {[25, 50, 75, 100].map(v => (
-          <line key={v} x1={padX} x2={w - padX} y1={h - padY - (v / 100) * (h - 2 * padY)} y2={h - padY - (v / 100) * (h - 2 * padY)} stroke="#f3f4f8" strokeWidth="1" />
-        ))}
-        <path d={toPath(salesPts)} fill="none" stroke="#ff6b35" strokeWidth="2.5" strokeLinecap="round" />
-        <path d={toPath(purchPts)} fill="none" stroke="#3b82f6" strokeWidth="2.5" strokeLinecap="round" />
-        {salesPts.map((v, i) => {
-          const x = padX + (i / (salesPts.length - 1)) * (w - 2 * padX);
-          const y = h - padY - (v / 100) * (h - 2 * padY);
-          return <circle key={i} cx={x} cy={y} r="3" fill="#ff6b35" stroke="white" strokeWidth="1.5" />;
-        })}
-        {months.map((m, i) => (
-          <text key={i} x={padX + (i / (months.length - 1)) * (w - 2 * padX)} y={h + 16} textAnchor="middle" fontSize="10" fill="#9ca3af">{m}</text>
-        ))}
-      </svg>
-    </div>
+    <ResponsiveContainer width="100%" height={300}>
+      <LineChart data={chartData} margin={{ top: 5, right: 30, left: 0, bottom: 5 }}>
+        <CartesianGrid strokeDasharray="3 3" stroke="#f3f4f8" />
+        <XAxis dataKey="month" />
+        <YAxis />
+        <Tooltip 
+          contentStyle={{ backgroundColor: '#fff', border: '1px solid #e5e7eb', borderRadius: 4 }}
+          formatter={(value) => `$${value}`}
+        />
+        <Legend />
+        <Line type="monotone" dataKey="sales" stroke="#ff6b35" strokeWidth={2.5} dot={{ fill: '#ff6b35', r: 3 }} name="Sales" />
+        <Line type="monotone" dataKey="purchase" stroke="#3b82f6" strokeWidth={2.5} dot={{ fill: '#3b82f6', r: 3 }} name="Purchase" />
+      </LineChart>
+    </ResponsiveContainer>
   );
 };
 
@@ -138,12 +66,11 @@ export default function Reports() {
 
   return (
     <div>
-      {/* Summary Stats */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: 16, marginBottom: 24 }}>
         {reportStats.map((s, i) => (
           <div className="stat-card" key={i}>
             <div className="stat-card-header">
-              <div className={`stat-icon ${s.color}`}>{s.icon}</div>
+              <div className={`stat-icon ${s.color}`}></div>
               <span className={`stat-badge ${s.up ? 'badge-up' : 'badge-down'}`}>{s.change}</span>
             </div>
             <div className="stat-value" style={{ fontSize: 18 }}>{s.value}</div>
@@ -151,8 +78,6 @@ export default function Reports() {
           </div>
         ))}
       </div>
-
-      {/* Chart */}
       <div className="chart-card mb-4">
         <div className="chart-header">
           <div className="chart-title">Revenue Overview — 2026</div>
@@ -162,19 +87,17 @@ export default function Reports() {
             <button className="btn btn-primary btn-sm">Apply</button>
           </div>
         </div>
-        <LineChart />
+        <ChartComponent />
       </div>
 
-      {/* Tabs */}
       <div className="tab-bar">
-        {[['sales', '🛒 Sales Report'], ['purchase', '🧾 Purchase Report'], ['returns', '↩️ Returns']].map(([id, label]) => (
+        {[['sales', 'Sales Report'], ['purchase', 'Purchase Report'], ['returns', 'Returns']].map(([id, label]) => (
           <div key={id} className={`tab ${activeTab === id ? 'active' : ''}`} onClick={() => setActiveTab(id)}>
             {label}
           </div>
         ))}
       </div>
 
-      {/* Filters */}
       <div className="filter-bar mb-4">
         <div className="search-box">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
@@ -193,7 +116,6 @@ export default function Reports() {
         </button>
       </div>
 
-      {/* Table */}
       {activeTab === 'sales' && (
         <div className="table-card">
           <div className="table-card-header">
@@ -280,7 +202,7 @@ export default function Reports() {
       {activeTab === 'returns' && (
         <div className="table-card">
           <div style={{ padding: 40, textAlign: 'center', color: '#9ca3af' }}>
-            <div style={{ fontSize: 48, marginBottom: 12 }}>↩️</div>
+            <div style={{ fontSize: 48, marginBottom: 12 }}></div>
             <div style={{ fontSize: 16, fontWeight: 600, color: '#6b7280', marginBottom: 8 }}>No Returns in Date Range</div>
             <div style={{ fontSize: 13 }}>Adjust the date filters to see returns data</div>
           </div>

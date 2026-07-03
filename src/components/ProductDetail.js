@@ -48,9 +48,9 @@ function ProductDetail({ product, onBack }) {
           <div className="page-header-title">{p.name}</div>
         </div>
         <div style={{ display: 'flex', gap: 10 }}>
-          <button className="btn btn-outline btn-sm">✏️ Edit Product</button>
-          <button className="btn btn-outline btn-sm">🗑 Delete</button>
-          <button className="btn btn-primary btn-sm">+ Add Stock</button>
+          <button className="btn btn-outline btn-sm">Edit Product</button>
+          <button className="btn btn-outline btn-sm">Delete</button>
+          <button className="btn btn-primary btn-sm">Add Stock</button>
         </div>
       </div>
 
@@ -114,15 +114,15 @@ function ProductDetail({ product, onBack }) {
           <div className="detail-divider"></div>
 
           <div style={{ display: 'flex', gap: 10 }}>
-            <button className="btn btn-primary" style={{ flex: 1 }}>🛒 Create Sale</button>
-            <button className="btn btn-outline" style={{ flex: 1 }}>🧾 Create Purchase</button>
+            <button className="btn btn-primary" style={{ flex: 1 }}>Create Sale</button>
+            <button className="btn btn-outline" style={{ flex: 1 }}>Create Purchase</button>
           </div>
         </div>
       </div>
 
       {/* Tabs Section */}
       <div className="tab-bar">
-        {[['overview', '📋 Overview'], ['stock-history', '📦 Stock History'], ['related', '🔗 Related Products']].map(([id, label]) => (
+        {[['overview', 'Overview'], ['stock-history', 'Stock History'], ['related', 'Related Products']].map(([id, label]) => (
           <div key={id} className={`tab ${activeTab === id ? 'active' : ''}`} onClick={() => setActiveTab(id)}>
             {label}
           </div>

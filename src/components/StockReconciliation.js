@@ -74,7 +74,7 @@ export default function StockReconciliation() {
 
       {/* Tabs */}
       <div className="tab-bar">
-        {[['count', '🔢 Stock Count'], ['variance', '📊 Variance Report']].map(([id, label]) => (
+        {[['count', 'Stock Count'], ['variance', 'Variance Report']].map(([id, label]) => (
           <div key={id} className={`tab ${activeTab === id ? 'active' : ''}`} onClick={() => setActiveTab(id)}>
             {label} {id === 'variance' && counted.length > 0 && <span style={{ background: 'var(--primary)', color: 'white', borderRadius: 20, padding: '1px 6px', fontSize: 10, marginLeft: 4 }}>{counted.length}</span>}
           </div>
@@ -103,14 +103,14 @@ export default function StockReconciliation() {
                 Reset
               </button>
               <button className="btn btn-primary btn-sm" onClick={() => setSubmitted(true)} disabled={counted.length === 0}>
-                ✅ Submit Reconciliation
+                Submit Reconciliation
               </button>
             </div>
           </div>
 
           {submitted && (
             <div style={{ background: '#ecfdf5', border: '1px solid #a7f3d0', borderRadius: 10, padding: '14px 20px', marginBottom: 16, color: '#065f46', fontSize: 14, fontWeight: 600 }}>
-              ✅ Stock reconciliation submitted successfully! {understock.length} discrepancies will be adjusted.
+              Stock reconciliation submitted successfully! {understock.length} discrepancies will be adjusted.
             </div>
           )}
 
