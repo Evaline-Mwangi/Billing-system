@@ -9,6 +9,8 @@ import StockReconciliation from './components/StockReconciliation';
 import Invoice from "./components/Invoice";
 import InvoiceHistory from "./components/InvoiceHistory";
 import StockTransfer from "./components/StockTransfer";
+import Purchase from "./components/Purchase";
+import Expenses from "./components/Expenses";
 import './App.css';
 
 function App() {
@@ -28,7 +30,9 @@ function App() {
       case 'products': return <Products onProductClick={(p) => navigate('product-detail', p)} />;
       case 'product-detail': return <ProductDetail product={selectedProduct} onBack={() => navigate('products')} />;
       case 'stock-reconciliation': return <StockReconciliation />;
+      case 'purchase': return <Purchase navigate={navigate} />;
       case 'stock-transfer': return <StockTransfer navigate={navigate} />;
+      case 'expenses': return <Expenses navigate={navigate} />;
       case 'invoice': return <Invoice navigate={navigate} />;
       case 'invoice-history': return <InvoiceHistory navigate={navigate} />;
       default: return <Dashboard />;

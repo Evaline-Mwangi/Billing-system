@@ -33,7 +33,7 @@ function StockTransfer({ navigate }) {
         return {
           ...p,
           price: numericPrice || 0,
-          stock: Math.floor(Math.random() * 100) + 10 // Mock stock levels
+          stock: Math.floor(Math.random() * 100) + 10 
         };
       });
       setProducts(cleanedProducts);
