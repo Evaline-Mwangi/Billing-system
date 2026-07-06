@@ -1,5 +1,4 @@
-
-import React, { useState } from 'react';
+import React from 'react';
 import '../App.css';
 import customersLogo from '../icons/customers.png';
 import posLogo from '../icons/sales.png';
@@ -77,6 +76,12 @@ const navItems = [
 function Sidebar({ activePage, navigate }) {
   return (
     <div className="sidebar">
+      <h2>BillSystem</h2>
+      <ul>
+        <li onClick={() => navigate('dashboard')}>Dashboard</li>
+        <li onClick={() => navigate('invoice')}>Invoices</li>
+        <li onClick={() => navigate('reports')}>Reports</li>
+      </ul>
       <div className="sidebar-logo">
         <div className="logo-icon"> 
           <img src={posLogo} alt="POS" />
