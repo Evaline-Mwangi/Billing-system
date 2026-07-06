@@ -1,17 +1,31 @@
+name: Build Docker Image
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
 
 jobs:
-
   build:
-
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+      - uses: actions/checkout@v4
+
+      - name: Debug
+        run: |
+          echo "Current directory:"
+          pwd
+          echo
+          echo "Files in current directory:"
+          ls -la
+          echo
+          echo "Find all Dockerfiles:"
+          find . -name "Dockerfile"
+          echo
+          echo "Git status:"
+          git status
+
+      - name: Build Docker image
+        run: docker build . -f Dockerfile -t my-image-name:latest
