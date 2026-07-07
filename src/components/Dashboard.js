@@ -121,98 +121,98 @@ export default function Dashboard() {
   const activeStaff = staffActivity.find((s) => s.name === selectedStaff);
 
   return (
-    <div className="dashboard">
-      <div className="dashboard-header">
+    <div className="dash-page">
+      <div className="dash-header">
         <div>
-          <h1 className="dashboard-title">Dashboard</h1>
-          <div className="breadcrumb">Home / Dashboard</div>
+          <h1 className="dash-title">Dashboard</h1>
+          <div className="dash-breadcrumb">Home / Dashboard</div>
         </div>
-        <div className="welcome-text">Welcome, Wayne</div>
+        <div className="dash-welcome">Welcome, Wayne</div>
       </div>
 
       {/* Primary stat cards */}
-      <div className="stat-grid">
+      <div className="dash-stat-grid">
         {statCards.map((card) => (
           <StatCard key={card.id} {...card} />
         ))}
       </div>
 
       {/* Secondary stat cards (Low Stock / Pending) */}
-      <div className="stat-grid secondary">
+      <div className="dash-stat-grid dash-stat-grid-secondary">
         {secondaryCards.map((card) => (
           <StatCard key={card.id} {...card} wide />
         ))}
       </div>
 
       {/* Top Selling Items */}
-      <section className="panel">
-        <h2 className="panel-title">Top Selling Items</h2>
-        <div className="product-grid four-col">
+      <section className="dash-panel">
+        <h2 className="dash-panel-title">Top Selling Items</h2>
+        <div className="dash-product-grid dash-four-col">
           {topSellingItems.map((item) => (
-            <div className="product-card" key={item.name}>
-              <div className="product-image-wrap">
-                <img src={item.image} alt={item.name} className="product-image" />
+            <div className="dash-product-card" key={item.name}>
+              <div className="dash-product-image-wrap">
+                <img src={item.image} alt={item.name} className="dash-product-image" />
               </div>
-              <div className="product-name">{item.name}</div>
-              <div className="product-sub">{item.sold} sold</div>
+              <div className="dash-product-name">{item.name}</div>
+              <div className="dash-product-sub">{item.sold} sold</div>
             </div>
           ))}
         </div>
       </section>
 
       {/* Category Statistics */}
-      <section className="panel">
-        <h2 className="panel-title">Category Statistics</h2>
-        <div className="category-list">
+      <section className="dash-panel">
+        <h2 className="dash-panel-title">Category Statistics</h2>
+        <div className="dash-category-list">
           {categoryStats.map((cat) => (
-            <div className="category-row" key={cat.name}>
-              <div className="category-name">{cat.name}</div>
-              <div className="category-bar-track">
+            <div className="dash-category-row" key={cat.name}>
+              <div className="dash-category-name">{cat.name}</div>
+              <div className="dash-category-bar-track">
                 <div
-                  className="category-bar-fill"
+                  className="dash-category-bar-fill"
                   style={{
                     width: `${(cat.value / maxCategoryValue) * 100}%`,
                     backgroundColor: cat.color,
                   }}
                 />
               </div>
-              <div className="category-value">{cat.value}</div>
+              <div className="dash-category-value">{cat.value}</div>
             </div>
           ))}
         </div>
       </section>
 
       {/* Active Orders by Staff */}
-      <section className="panel">
-        <h2 className="panel-title">Active Orders by Staff</h2>
-        <div className="staff-grid">
+      <section className="dash-panel">
+        <h2 className="dash-panel-title">Active Orders by Staff</h2>
+        <div className="dash-staff-grid">
           {staffActivity.map((staff) => (
             <button
               key={staff.name}
-              className={`staff-card ${
-                selectedStaff === staff.name ? "staff-card-selected" : ""
+              className={`dash-staff-card ${
+                selectedStaff === staff.name ? "dash-staff-card-selected" : ""
               }`}
               onClick={() => setSelectedStaff(staff.name)}
               type="button"
             >
-              <div className="staff-avatar">
+              <div className="dash-staff-avatar">
                 <User size={20} />
               </div>
               <div>
-                <div className="staff-name">{staff.name}</div>
-                <div className="staff-sub">{staff.activeOrders} active orders</div>
+                <div className="dash-staff-name">{staff.name}</div>
+                <div className="dash-staff-sub">{staff.activeOrders} active orders</div>
               </div>
             </button>
           ))}
         </div>
 
         {activeStaff && (
-          <div className="staff-summary">
-            <div className="staff-summary-title">{activeStaff.name}'s Summary</div>
-            <div className="staff-summary-row">
+          <div className="dash-staff-summary">
+            <div className="dash-staff-summary-title">{activeStaff.name}'s Summary</div>
+            <div className="dash-staff-summary-row">
               Active Orders: <strong>{activeStaff.activeOrders}</strong>
             </div>
-            <div className="staff-summary-row">
+            <div className="dash-staff-summary-row">
               Sales Made: <strong>{activeStaff.salesMade}</strong>
             </div>
           </div>
@@ -220,15 +220,15 @@ export default function Dashboard() {
       </section>
 
       {/* Trending Products */}
-      <section className="panel">
-        <h2 className="panel-title">Trending Products</h2>
-        <div className="product-grid three-col">
+      <section className="dash-panel">
+        <h2 className="dash-panel-title">Trending Products</h2>
+        <div className="dash-product-grid dash-three-col">
           {trendingProducts.map((item) => (
-            <div className="product-card" key={item.name}>
-              <div className="product-image-wrap tall">
-                <img src={item.image} alt={item.name} className="product-image" />
+            <div className="dash-product-card" key={item.name}>
+              <div className="dash-product-image-wrap dash-tall">
+                <img src={item.image} alt={item.name} className="dash-product-image" />
               </div>
-              <div className="product-name">{item.name}</div>
+              <div className="dash-product-name">{item.name}</div>
             </div>
           ))}
         </div>
@@ -239,15 +239,15 @@ export default function Dashboard() {
 
 function StatCard({ label, value, delta, deltaTone, icon: Icon, iconBg, iconColor, wide }) {
   return (
-    <div className={`stat-card ${wide ? "stat-card-wide" : ""}`}>
-      <div className="stat-card-top">
-        <div className="stat-value">{value}</div>
-        <span className={`stat-delta stat-delta-${deltaTone}`}>{delta}</span>
-        <div className="stat-icon" style={{ backgroundColor: iconBg, color: iconColor }}>
+    <div className={`dash-stat-card ${wide ? "dash-stat-card-wide" : ""}`}>
+      <div className="dash-stat-card-top">
+        <div className="dash-stat-value">{value}</div>
+        <span className={`dash-stat-delta dash-stat-delta-${deltaTone}`}>{delta}</span>
+        <div className="dash-stat-icon" style={{ backgroundColor: iconBg, color: iconColor }}>
           <Icon size={18} />
         </div>
       </div>
-      <div className="stat-label">{label}</div>
+      <div className="dash-stat-label">{label}</div>
     </div>
   );
 }
