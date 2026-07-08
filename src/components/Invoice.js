@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 // Import the named products array directly from your team's file
 import { products as originalProducts } from "./Products"; 
 
+
 function Invoice({ navigate }) { 
   const [products, setProducts] = useState([]);
   const [cart, setCart] = useState([]);
