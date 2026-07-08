@@ -13,12 +13,12 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.use("/products", ProductsRouter);
-app.use("/expenses", ExpenseRouter);
-app.use("/invoices", InvoiceRouter);
-app.use("/sales", SalesRouter);
-app.use("/suppliers", SuppliersRouter);
-app.use("/users", UsersRouter);
+app.use("/api/products", ProductsRouter);
+app.use("/api/expenses", ExpenseRouter);
+app.use("/api/invoices", InvoiceRouter);
+app.use("/api/sales", SalesRouter);
+app.use("/api/suppliers", SuppliersRouter);
+app.use("/api/users", UsersRouter);
 app.use("/api/customers", CustomerRouter);
 
 

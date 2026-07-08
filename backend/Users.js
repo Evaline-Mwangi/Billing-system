@@ -3,7 +3,7 @@ import db from "../src/dbConn.js";
 
 const router = express.Router();
 
-const allowedFields = ["name", "role", "emp_date", "salary", "password"];
+const allowedFields = ["name", "role", "emp_date", "salary", "password", "email", "phone"];
 
 const getPayload = (body) => {
   const payload = {};

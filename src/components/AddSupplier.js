@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import '../App.css';
 
-const API_BASE_URL = 'http://localhost:3001';
+const API_BASE_URL = 'http://localhost:3001/api';
 
 export default function AddSupplier({ onSuccess, onCancel }) {
   const [formData, setFormData] = useState({

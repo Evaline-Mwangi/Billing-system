@@ -3,12 +3,13 @@ import '../App.css';
 
 const API_BASE_URL = 'http://localhost:3001/api';
 
-export default function AddCustomer({ onSuccess, onCancel }) {
+export default function AddUser({ onSuccess, onCancel }) {
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-  });
+  name: "",
+  role: "",
+  email: "",
+  phone: "",
+    });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -26,47 +27,49 @@ export default function AddCustomer({ onSuccess, onCancel }) {
     setError('');
 
     if (!formData.name.trim()) {
-      setError('Customer name is required');
+      setError('User name is required');
       setLoading(false);
       return;
     }
 
     try {
-      const response = await fetch(`${API_BASE_URL}/customers`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
-      });
-      if (!response.ok) {
-        const error = await response.json();
-        throw new Error(error.error || "Failed to add customer");
-        }
+        console.log("Sending to backend:", formData);
+        const response = await fetch(`${API_BASE_URL}/users`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(formData),
+        });
+        if (!response.ok) {
+            const error = await response.json();
+            throw new Error(error.error || "Failed to add user");
+            }
 
-      const newCustomer = await response.json();
-      console.log('Customer added:', newCustomer);
-      
-      if (onSuccess) {
-        onSuccess(newCustomer);
-      }
-      
-      setFormData({
-        name: '',
-        email: '',
-        phone: '',
-      });
-    } catch (err) {
-      console.error(err);
-      setError(err.message || 'Failed to add customer. Please try again.');
-    } finally {
-      setLoading(false);
-    }
-  };
+        const newUser = await response.json();
+        console.log('user added:', newUser);
+        
+        if (onSuccess) {
+            onSuccess(newUser);
+        }
+        
+        setFormData({
+            name: '',
+            role: '',
+            email: '',
+            phone: '',
+        });
+        } catch (err) {
+        console.error(err);
+        setError(err.message || 'Failed to add user. Please try again.');
+        } finally {
+        setLoading(false);
+        }
+    };
 
   return (
     <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
       <div className="table-card" style={{ maxWidth: '600px', width: '100%' }}>
         <div className="table-card-header">
-          <div className="table-card-title">Add New Customer</div>
+          <div className="table-card-title">Add New User</div>
         </div>
 
         <div style={{ padding: '30px' }}>
@@ -88,14 +91,14 @@ export default function AddCustomer({ onSuccess, onCancel }) {
           <form onSubmit={handleSubmit}>
             <div style={{ marginBottom: '20px' }}>
               <label style={{ display: 'block', marginBottom: '6px', fontWeight: '600', fontSize: '14px' }}>
-                Customer Name <span style={{ color: '#d64545' }}>*</span>
+                User Name <span style={{ color: '#d64545' }}>*</span>
               </label>
               <input
                 type="text"
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
-                placeholder="Enter customer name"
+                placeholder="Enter user name"
                 style={{
                   width: '100%',
                   padding: '10px 12px',
@@ -118,7 +121,7 @@ export default function AddCustomer({ onSuccess, onCancel }) {
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
-                placeholder="Enter customer email"
+                placeholder="Enter user email"
                 style={{
                   width: '100%',
                   padding: '10px 12px',
@@ -140,7 +143,29 @@ export default function AddCustomer({ onSuccess, onCancel }) {
                 name="phone"
                 value={formData.phone}
                 onChange={handleChange}
-                placeholder="Enter customer phone"
+                placeholder="Enter user phone"
+                style={{
+                  width: '100%',
+                  padding: '10px 12px',
+                  border: '1px solid #e4e8ef',
+                  borderRadius: '6px',
+                  fontSize: '14px',
+                  fontFamily: 'inherit',
+                  boxSizing: 'border-box',
+                }}
+              />
+            </div>
+
+            <div style={{ marginBottom: '20px' }}>
+              <label style={{ display: 'block', marginBottom: '6px', fontWeight: '600', fontSize: '14px' }}>
+                Role
+              </label>
+              <input
+                type="text"
+                name="role"
+                value={formData.role}
+                onChange={handleChange}
+                placeholder="Enter user role"
                 style={{
                   width: '100%',
                   padding: '10px 12px',
@@ -188,7 +213,7 @@ export default function AddCustomer({ onSuccess, onCancel }) {
                   transition: 'all 0.2s ease',
                 }}
               >
-                {loading ? 'Adding...' : 'Add Customer'}
+                {loading ? 'Adding...' : 'Add User '}
               </button>
             </div>
           </form>

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import '../App.css';
 import AddCustomer from './AddCustomer';
 
-const API_BASE_URL = 'http://localhost:3001';
+const API_BASE_URL = 'http://localhost:3001/api';
 
 const formatCurrency = (value) => `KSh ${Number(value || 0).toLocaleString()}`;
 
