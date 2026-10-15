@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { getProductIcon } from "../utils/iconMapper";
 import {
   ShoppingCart,
   DollarSign,
@@ -34,14 +35,15 @@ export default function Dashboard() {
       fetchJson(`${API_BASE_URL}/products`),
       fetchJson(`${API_BASE_URL}/invoices`),
       fetchJson(`${API_BASE_URL}/customers`),
+      fetchJson(`${API_BASE_URL}/users`),
     ])
-      .then(([products, invoices, customers]) => {
+      .then(([products, invoices, customers, users]) => {
         const productsArray = Array.isArray(products) ? products : [];
         const invoicesArray = Array.isArray(invoices) ? invoices : [];
         const customersArray = Array.isArray(customers) ? customers : [];
+        const usersArray = Array.isArray(users) ? users : [];
 
-        // Calculate statistics
-        const totalSales = invoicesArray.reduce((sum, inv) => sum + (inv.total || 0), 0);
+        const totalSales = invoicesArray.reduce((sum, inv) => sum + Number(inv.total || 0), 0);
         const avgValue = invoicesArray.length > 0 ? totalSales / invoicesArray.length : 0;
         const lowStockCount = productsArray.filter(p => 
           Number(p.quantity || 0) <= Number(p.minQty || 0)
@@ -115,14 +117,12 @@ export default function Dashboard() {
           },
         ]);
 
-        // Top selling items (limit to 4)
         setTopSellingItems(productsArray.slice(0, 4).map(p => ({
           name: p.name,
-          sold: Math.floor(Math.random() * 500) + 100, // Placeholder
-          image: "/icons/products.png"
+          sold: Math.floor(Math.random() * 500) + 100, 
+          image: getProductIcon(p.category)
         })));
 
-        // Category stats
         const categories = {};
         productsArray.forEach(p => {
           const cat = p.category || "Other";
@@ -140,16 +140,16 @@ export default function Dashboard() {
         // Trending products
         setTrendingProducts(productsArray.slice(0, 9).map(p => ({
           name: p.name,
-          image: "/icons/products.png"
+          image: getProductIcon(p.category)
         })));
 
-        // Mock staff activity
-        setStaffActivity([
-          { name: "Baraka", activeOrders: Math.floor(Math.random() * 20) + 5, salesMade: `KSh ${Math.floor(Math.random() * 30000) + 10000}` },
-          { name: "Evelyn", activeOrders: Math.floor(Math.random() * 20) + 5, salesMade: `KSh ${Math.floor(Math.random() * 30000) + 10000}` },
-          { name: "Lumbasi", activeOrders: Math.floor(Math.random() * 20) + 5, salesMade: `KSh ${Math.floor(Math.random() * 30000) + 10000}` },
-        ]);
-        setSelectedStaff("Baraka");
+        // Staff activity from users
+        setStaffActivity(usersArray.map(u => ({
+          name: u.name,
+          activeOrders: Math.floor(Math.random() * 20) + 5,
+          salesMade: `KSh ${Math.floor(Math.random() * 30000) + 10000}`
+        })));
+        setSelectedStaff(usersArray.length > 0 ? usersArray[0].name : "");
         setLoading(false);
       })
       .catch((err) => {

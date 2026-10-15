@@ -4,6 +4,7 @@ import db from "./db.js";
 const router = express.Router();
 
 const allowedFields = [
+  "icon",
   "name",
   "sku",
   "category",
@@ -37,6 +38,7 @@ router.get("/", async (req, res) => {
   try {
     const result = await db.query("SELECT * FROM products ORDER BY name ASC");
     res.json(result.rows);
+    res.status(200).json({ message: "list of products retrieved successfully" });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: err.message });
@@ -69,16 +71,18 @@ router.get("/category/:category", async (req, res) => {
   }
 });
 
-router.get("/:id", async (req, res) => {
+router.get("/:product_id", async (req, res) => {
   try {
-    const result = await db.query("SELECT * FROM products WHERE id = $1", [req.params.id]);
+    const result = await db.query("SELECT * FROM products WHERE id = $1", [req.params.product_id]);
     if (result.rows.length === 0) {
       return res.status(404).json({ error: "Product not found" });
     }
     res.json(result.rows[0]);
+    res.status(200).json({ message: "product found" });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: err.message });
+    
   }
 });
 
@@ -103,7 +107,7 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.put("/:id", async (req, res) => {
+router.put("/:product_id", async (req, res) => {
   try {
     const payload = getPayload(req.body);
     const fields = Object.keys(payload);
@@ -115,7 +119,7 @@ router.put("/:id", async (req, res) => {
     const values = Object.values(payload);
     const result = await db.query(
       `UPDATE products SET ${assignments} WHERE id = $${fields.length + 1} RETURNING *`,
-      [...values, req.params.id]
+      [...values, req.params.product_id]
     );
 
     if (result.rows.length === 0) {
@@ -129,9 +133,9 @@ router.put("/:id", async (req, res) => {
   }
 });
 
-router.delete("/:id", async (req, res) => {
+router.delete("/:product_id", async (req, res) => {
   try {
-    const result = await db.query("DELETE FROM products WHERE id = $1 RETURNING id", [req.params.id]);
+    const result = await db.query("DELETE FROM products WHERE id = $1 RETURNING id", [req.params.product_id]);
     if (result.rows.length === 0) {
       return res.status(404).json({ error: "Product not found" });
     }

@@ -1,0 +1,341 @@
+openapi: '3.0.0'
+info:
+  title: Billing System API
+  version: '1.0.0'
+paths:
+  /discounts:
+    get:
+      tags:
+        - discounts
+      summary: Retrieve all discounts
+      operationId: listDiscounts
+      responses:
+        "200":
+          description: List of discounts, retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Discount'
+  /discounts/{product_id}:
+    parameters:
+      - name: product_id
+        in: path
+        description: UUID of the product for discount patch
+        required: true
+        schema:
+          type: string
+          format: uuid
+    patch:
+      tags:
+        - discounts
+      summary: Partially update a discount by product ID
+      operationId: patchDiscount
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DiscountPatch'
+      responses:
+        "200":
+          description: Discount updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Discount'
+        "400":
+          description: Invalid input, no valid fields provided for update
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "404":
+          description: Discount not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /insights:
+    post:
+      tags:
+        - insights
+      summary: Create a new product view insight
+      operationId: createInsight
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InsightCreate'
+      responses:
+        "201":
+          description: Insight created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Insight'
+        "400":
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /insights/trends:
+    get:
+      tags:
+        - insights
+      summary: Retrieve trends data
+      operationId: getTrends
+      responses:
+        "200":
+          description: Trends data, retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      format: uuid
+                    name:
+                      type: string
+                    viewCount:
+                      type: integer
+                    unitsSold:
+                      type: string
+  /insights/products-bought-together:
+    get:
+      tags:
+        - insights
+      summary: Retrieve products frequently bought together
+      operationId: getProductsBoughtTogether
+      responses:
+        "200":
+          description: Products bought together data retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    cart:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          id:
+                            type: string
+                            format: uuid
+                          sku:
+                            type: string
+                          name:
+                            type: string
+                          price:
+                            type: number
+                          quantity:
+                            type: integer
+                    i_date:
+                      type: string
+                      format: date-time
+  /products:
+    get:
+      tags:
+        - products
+      summary: Retrieve all products
+      operationId: listProducts
+      responses:
+        "200":
+          description: List of products retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Product'
+  /products/{id}:
+    parameters:
+      - $ref: '#/components/parameters/product_id'
+    get:
+      tags:
+        - products
+      summary: Retrieve a product by ID
+      operationId: getProductById
+      responses:
+        "200":
+          description: Product found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        "404":
+          description: Product not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    Discount:
+      type: object
+      description: A discount record
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        product_id:
+          type: string
+          format: uuid
+        amount:
+          type: number
+          minimum: 0
+        start_date:
+          type: string
+          format: date-time
+        end_date:
+          type: string
+          format: date-time
+          nullable: true
+        updated_at:
+          type: string
+          format: date-time
+      required:
+        - product_id
+        - amount
+        - start_date
+    DiscountPatch:
+      type: object
+      properties:
+        amount:
+          type: number
+          minimum: 0
+        start_date:
+          type: string
+          format: date-time
+        end_date:
+          type: string
+          format: date-time
+    Insight:
+      type: object
+      description: Product views insight
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        product_id:
+          type: string
+          format: uuid
+        total_views:
+          type: integer
+          default: 0
+      required:
+        - product_id
+    InsightCreate:
+      type: object
+      properties:
+        product_id:
+          type: string
+          format: uuid
+        total_views:
+          type: integer
+      required:
+        - product_id
+    Product:
+      type: object
+      description: A product record
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        icon:
+          type: string
+          maxLength: 500
+          nullable: true
+        name:
+          type: string
+          maxLength: 50
+        sku:
+          type: string
+          maxLength: 20
+        category:
+          type: string
+          maxLength: 25
+        brand:
+          type: string
+          maxLength: 50
+        unit:
+          type: string
+          maxLength: 25
+        sp:
+          type: number
+          format: float
+        quantity:
+          type: integer
+          default: 0
+        warehouse:
+          type: string
+          maxLength: 50
+      required:
+        - name
+        - sku
+        - category
+        - brand
+        - unit
+        - sp
+        - warehouse
+    ProductUpdate:
+      type: object
+      properties:
+        icon:
+          type: string
+          maxLength: 500
+        name:
+          type: string
+          maxLength: 50
+        sku:
+          type: string
+          maxLength: 20
+        category:
+          type: string
+          maxLength: 25
+        brand:
+          type: string
+          maxLength: 50
+        unit:
+          type: string
+          maxLength: 25
+        sp:
+          type: number
+          format: float
+        bp:
+          type: number
+          format: float
+        quantity:
+          type: integer
+        minQty:
+          type: integer
+        warehouse:
+          type: string
+          maxLength: 50
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error message describing the failure reason
+  parameters:
+    product_id:
+      name: product_id
+      in: path
+      description: UUID of the product
+      required: true
+      schema:
+        type: string
+        format: uuid
